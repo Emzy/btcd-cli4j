@@ -94,11 +94,11 @@ public class NotificationMonitor extends Observable implements Observer, Runnabl
 		Thread.currentThread().setName(getUniqueName());
 		isActive = true;
 		try {
-			serverSocket = new ServerSocket(serverPort);
+			serverSocket = new ServerSocket(serverPort, 0, InetAddress.getLoopbackAddress());
 			serverSocket.setSoTimeout(IDLE_SOCKET_TIMEOUT);
 		} catch (IOException e) {
 			try {
-				serverSocket = new ServerSocket(0);
+				serverSocket = new ServerSocket(0, 0, InetAddress.getLoopbackAddress());
 				serverSocket.setSoTimeout(IDLE_SOCKET_TIMEOUT);
 				LOG.warn("-- activate(..): failed to create server socket (monitor: '{}', port: "
 						+ "'{}'), reverting to unused port '{}'", type.name(), serverPort, 
